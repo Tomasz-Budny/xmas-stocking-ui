@@ -11,6 +11,10 @@ input {
   width: 100%;
 }
 
+input.ng-invalid.ng-touched {
+  border-color: red;
+}
+
 .btn {
   border: 2px;
   border-radius: 100px;
