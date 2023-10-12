@@ -11,13 +11,34 @@
     <div 
       [formGroupName]="i" 
       class="grid gap-2">
-      <div >
+      <div>
         <div class="text-xs">Imię</div>
         <input type="text" class="name" formControlName="name">
+        <div
+          *ngIf="
+            group.get('name').touched && 
+            group.get('name').errors as errors" 
+          class="text-xs errors">
+          <div *ngIf="errors['required']">
+            Pole wymagane*
+          </div>
+        </div>
       </div>
-      <div >
+      <div>
         <div class="text-xs">Email</div>
         <input type="text" class="email" formControlName="email">
+        <div
+          *ngIf="
+            group.get('email').touched && 
+            group.get('email').errors as errors" 
+          class="text-xs errors">
+          <div *ngIf="errors['required']">
+            Pole wymagane*
+          </div>
+          <div *ngIf="errors['email']">
+            Niepoprawny format*
+          </div>
+        </div>
       </div>
       <i (click)="removeAttendee(i)" class="fa-solid fa-circle-xmark"></i>
     </div>

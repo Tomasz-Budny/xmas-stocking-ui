@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-attendee-form',
   templateUrl: './attendee-form.component.html',
-  styleUrls: ['./attendee-form.component.scss']
+  styleUrls: ['./attendee-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AttendeeFormComponent {
 
