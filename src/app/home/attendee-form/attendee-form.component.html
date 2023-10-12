@@ -1,4 +1,9 @@
 <form [formGroup]="attendeeForm">
+  <div
+    class="text-center" 
+    *ngIf="attendeesArray.controls.length === 0">
+    Brak uczestników!
+  </div>
   <div 
     class="attendee-container w-full" 
     *ngFor="let group of attendeesArray.controls; let i = index" 
@@ -19,5 +24,9 @@
   </div>
 </form>
 <div class="flex mt-5">
-  <button class="add-attendee btn m-auto" (click)="addAttendee()">Dodaj</button>
+  <button 
+    class="add-attendee btn m-auto" 
+    (click)="addAttendee()">
+    Dodaj <i class="fa-solid fa-plus text-xs"></i>
+  </button>
 </div>
