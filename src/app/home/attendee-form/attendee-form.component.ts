@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-attendee-form',
@@ -18,8 +18,8 @@ export class AttendeeFormComponent {
 
   private addAttendeeGroup() : FormGroup {
     return this.fb.group({
-      name: [],
-      email: []
+      name: [null, Validators.required],
+      email: [null, [Validators.required, Validators.email]]
     });
   }
 
