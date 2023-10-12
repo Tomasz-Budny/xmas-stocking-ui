@@ -1,16 +1,20 @@
 <form [formGroup]="attendeeForm">
   <div 
-    class="attendee-container" 
+    class="attendee-container w-full" 
     *ngFor="let group of attendeesArray.controls; let i = index" 
     formArrayName="attendees">
     <div 
       [formGroupName]="i" 
-      class="flex">
-      <p>Imię</p>
-      <input type="text" class="name" formControlName="name">
-      <p>Email</p>
-      <input type="text" class="email" formControlName="email">
-      <button (click)="removeAttendee(i)">X</button>
+      class="grid gap-2">
+      <div >
+        <div class="text-xs">Imię</div>
+        <input type="text" class="name" formControlName="name">
+      </div>
+      <div >
+        <div class="text-xs">Email</div>
+        <input type="text" class="email" formControlName="email">
+      </div>
+      <i (click)="removeAttendee(i)" class="fa-solid fa-circle-xmark"></i>
     </div>
   </div>
 </form>
