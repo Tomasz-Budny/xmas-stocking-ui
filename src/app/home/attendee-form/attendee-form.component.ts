@@ -1,6 +1,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil, tap } from 'rxjs';
+import { DrawApiService } from 'src/app/services/draw-api.service';
 import { FooterService } from 'src/app/services/footer.service';
 import { CustomValidators } from 'src/app/utilities/custom-validators';
 
@@ -17,6 +18,7 @@ export class AttendeeFormComponent implements AfterViewInit, OnDestroy {
 
   constructor(
     public footerService: FooterService,
+    public drawApiService: DrawApiService,
     private fb: FormBuilder
   ) {
     this.attendeeForm = this.fb.group({
@@ -47,8 +49,6 @@ export class AttendeeFormComponent implements AfterViewInit, OnDestroy {
     .subscribe(_ => {
       this.submit();
     });
-
-    this.attendeeForm.errors
   }
 
   ngOnDestroy(): void {
@@ -67,6 +67,10 @@ export class AttendeeFormComponent implements AfterViewInit, OnDestroy {
     if(this.attendeeForm.valid) {
       const value = this.attendeeForm.value.attendees;
       console.log(value);
+      this.drawApiService.drawGiftPresenters(value)
+        .subscribe(res => {
+          console.log(res);
+        })
     }
   }
 

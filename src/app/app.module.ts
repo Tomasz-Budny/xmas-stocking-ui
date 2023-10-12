@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { AttendeeFormComponent } from './home/attendee-form/attendee-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FooterComponent } from './footer/footer.component';
+import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -20,6 +21,7 @@ const routes: Routes = [
     FooterComponent
   ],
   imports: [
+    HttpClientModule,
     ReactiveFormsModule,
     BrowserModule,
     RouterModule.forRoot(routes)
