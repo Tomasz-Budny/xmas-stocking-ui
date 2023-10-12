@@ -1,5 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable, Subject, switchMap, takeUntil, tap } from 'rxjs';
+import { FooterService } from 'src/app/services/footer.service';
+import { CustomValidators } from 'src/app/utilities/custom-validators';
 
 @Component({
   selector: 'app-attendee-form',
@@ -7,13 +10,17 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./attendee-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AttendeeFormComponent {
+export class AttendeeFormComponent implements AfterViewInit, OnDestroy {
 
   public attendeeForm: FormGroup;
+  public destroy$: Subject<void> = new Subject<void>();
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    public footerService: FooterService,
+    private fb: FormBuilder
+  ) {
     this.attendeeForm = this.fb.group({
-      attendees: this.fb.array([this.addAttendeeGroup()])
+      attendees: this.fb.array([this.addAttendeeGroup()], CustomValidators.minLengthArray(1))
     })
   }
 
@@ -22,6 +29,20 @@ export class AttendeeFormComponent {
       name: [null, Validators.required],
       email: [null, [Validators.required, Validators.email]]
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.attendeeForm.statusChanges.pipe(
+      tap(status => {
+        const isValid = status === 'VALID';
+        this.footerService.submitBtnEnabled.next(isValid);
+      }),
+      takeUntil(this.destroy$)
+    ).subscribe()
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
   }
 
   addAttendee() : void {
