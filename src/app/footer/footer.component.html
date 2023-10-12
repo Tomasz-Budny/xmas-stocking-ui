@@ -2,6 +2,7 @@
 <hr>
 <div class="container flex">
   <button 
+    (click)="footerService.formSubmitted.next()"
     [disabled]="!(footerService.submitBtnEnabled | async)"
     class="drawn-attendees btn ml-auto p-4 text-lg">
     Losuj

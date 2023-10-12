@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable, Subject, switchMap, takeUntil, tap } from 'rxjs';
+import { Subject, takeUntil, tap } from 'rxjs';
 import { FooterService } from 'src/app/services/footer.service';
 import { CustomValidators } from 'src/app/utilities/custom-validators';
 
@@ -38,7 +38,12 @@ export class AttendeeFormComponent implements AfterViewInit, OnDestroy {
         this.footerService.submitBtnEnabled.next(isValid);
       }),
       takeUntil(this.destroy$)
-    ).subscribe()
+    ).subscribe();
+
+    this.footerService.formSubmitted
+    .subscribe(_ => {
+      this.submit();
+    })
   }
 
   ngOnDestroy(): void {
@@ -53,9 +58,9 @@ export class AttendeeFormComponent implements AfterViewInit, OnDestroy {
     this.attendeesArray.removeAt(index);
   }
 
-  submit() : void {
+  private submit() : void {
     if(this.attendeeForm.valid) {
-      const value = this.attendeeForm.value;
+      const value = this.attendeeForm.value.attendees;
       console.log(value);
     }
   }
