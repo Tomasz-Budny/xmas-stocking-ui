@@ -44,7 +44,14 @@
     </div>
   </div>
 </form>
-<div class="flex mt-5">
+<div class="flex mt-5 flex-col">
+  <div
+    class="m-auto errors"
+    *ngIf="attendeeForm.get('attendees').errors as errors">
+    <div *ngIf="!errors['arrayLengthIsEven'] && attendeesArray.controls.length > 0">
+      Liczbą uczestników losowania musi być parzysta!
+    </div>
+  </div>
   <button 
     class="add-attendee btn m-auto" 
     (click)="addAttendee()">

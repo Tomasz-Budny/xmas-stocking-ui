@@ -20,7 +20,10 @@ export class AttendeeFormComponent implements AfterViewInit, OnDestroy {
     private fb: FormBuilder
   ) {
     this.attendeeForm = this.fb.group({
-      attendees: this.fb.array([this.addAttendeeGroup()], CustomValidators.minLengthArray(1))
+      attendees: this.fb.array(
+        [this.addAttendeeGroup(), this.addAttendeeGroup()], 
+        [CustomValidators.minLengthArray(1), 
+         CustomValidators.arrayLengthIsEven()])
     })
   }
 
@@ -43,7 +46,9 @@ export class AttendeeFormComponent implements AfterViewInit, OnDestroy {
     this.footerService.formSubmitted
     .subscribe(_ => {
       this.submit();
-    })
+    });
+
+    this.attendeeForm.errors
   }
 
   ngOnDestroy(): void {
