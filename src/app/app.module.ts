@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AttendeeFormComponent } from './home/attendee-form/attendee-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FooterComponent } from './footer/footer.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -15,7 +16,8 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     HomeComponent,
-    AttendeeFormComponent
+    AttendeeFormComponent,
+    FooterComponent
   ],
   imports: [
     ReactiveFormsModule,
