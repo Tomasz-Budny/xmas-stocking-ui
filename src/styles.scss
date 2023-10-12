@@ -1,1 +1,17 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input {
+  border: 2px solid #7949ff;
+  border-radius: 3px;
+}
+
+.btn {
+  border: 2px;
+  border-radius: 100px !important;
+  background-color: #7949ff;
+  color: white;
+  padding: 0.5rem;
+  min-width: 5rem;
+}

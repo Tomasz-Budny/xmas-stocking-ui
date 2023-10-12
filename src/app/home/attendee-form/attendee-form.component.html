@@ -3,7 +3,9 @@
     class="attendee-container" 
     *ngFor="let group of attendeesArray.controls; let i = index" 
     formArrayName="attendees">
-    <div [formGroupName]="i">
+    <div 
+      [formGroupName]="i" 
+      class="flex">
       <p>Imię</p>
       <input type="text" class="name" formControlName="name">
       <p>Email</p>
@@ -12,6 +14,6 @@
     </div>
   </div>
 </form>
-<button class="add-attendee-btn" (click)="addAttendee()">Dodaj</button>
+<button class="add-attendee btn" (click)="addAttendee()">Dodaj</button>
 <br>
-<button class="drawn-attendees-btn" (click)="submit()">Losuj</button>
+<button class="drawn-attendees btn" (click)="submit()">Losuj</button>
