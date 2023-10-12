@@ -1,1 +1,17 @@
-<p>attendee-form works!</p>
+<form [formGroup]="attendeeForm">
+  <div 
+    class="attendee-container" 
+    *ngFor="let group of attendeesArray.controls; let i = index" 
+    formArrayName="attendees">
+    <div [formGroupName]="i">
+      <p>Imię</p>
+      <input type="text" class="name" formControlName="name">
+      <p>Email</p>
+      <input type="text" class="email" formControlName="email">
+      <button (click)="removeAttendee(i)">X</button>
+    </div>
+  </div>
+</form>
+<button class="add-attendee-btn" (click)="addAttendee()">Dodaj</button>
+<br>
+<button class="drawn-attendees-btn" (click)="submit()">Losuj</button>
