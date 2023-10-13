@@ -5,13 +5,13 @@
     Brak uczestników!
   </div>
   <div 
-    class="attendee-container w-full mb-6" 
+    class="w-full mb-6" 
     *ngFor="let group of attendeesArray.controls; let i = index" 
     formArrayName="attendees">
     <hr>
     <div 
       [formGroupName]="i" 
-      class="grid gap-2 mt-2">
+      class="grid attendee-container  gap-2 mt-2">
       <div>
         <div class="text-xs">Imię</div>
         <input type="text" class="name" formControlName="name">
@@ -43,7 +43,7 @@
       </div>
       <i 
         (click)="removeAttendee(i)" 
-        class="fa-solid fa-circle-xmark col-start-3 row-start-1 row-end-3"></i>
+        class="fa-solid fa-circle-xmark remove-attendee col-start-3 row-start-1 row-end-3"></i>
       <div class="col-start-1 col-end-3">
         <div class="text-xs">Preferowane prezenty (opcjonalne)</div>
         <input 
@@ -67,4 +67,36 @@
     (click)="addAttendee()">
     Dodaj <i class="fa-solid fa-plus text-xs"></i>
   </button>
+</div>
+
+<div 
+  *ngIf="loading"
+  class="w-screen h-screen grid fixed inset-0">
+  <div class="spinner place-self-center"></div>
+</div>
+
+<div 
+  *ngIf="emailsDelivered"
+  class="w-screen h-screen grid fixed inset-0">
+  <div class="pop-up place-self-center flex flex-col items-center">
+    <div class="text-center">Wiadomości zostały dostarczone do odbiorców!</div>
+    <div 
+      (click)="emailsDelivered = false" 
+      class="text-center mt-3 close-pop-up">
+      Zamknij
+    </div>
+  </div>
+</div>
+
+<div 
+  *ngIf="errorOccured"
+  class="w-screen h-screen grid fixed inset-0">
+  <div class="pop-up place-self-center flex flex-col items-center">
+    <div class="text-center">Podczas wysyłania maili wystąpił błąd! Spróbuj ponownie później.</div>
+    <div 
+      (click)="errorOccured = false" 
+      class="text-center mt-3 close-pop-up">
+      Zamknij
+    </div>
+  </div>
 </div>

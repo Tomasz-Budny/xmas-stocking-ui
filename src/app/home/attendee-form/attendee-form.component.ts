@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil, tap } from 'rxjs';
 import { DrawApiService } from 'src/app/services/draw-api.service';
@@ -9,12 +9,14 @@ import { CustomValidators } from 'src/app/utilities/custom-validators';
   selector: 'app-attendee-form',
   templateUrl: './attendee-form.component.html',
   styleUrls: ['./attendee-form.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AttendeeFormComponent implements AfterViewInit, OnDestroy {
 
   public attendeeForm: FormGroup;
   public destroy$: Subject<void> = new Subject<void>();
+  public loading: boolean = false;
+  public emailsDelivered: boolean = false;
+  public errorOccured: boolean = false;
 
   constructor(
     public footerService: FooterService,
@@ -67,11 +69,15 @@ export class AttendeeFormComponent implements AfterViewInit, OnDestroy {
   private submit() : void {
     if(this.attendeeForm.valid) {
       const value = this.attendeeForm.value.attendees;
-      console.log(value);
+      this.loading = true
       this.drawApiService.drawGiftPresenters(value)
-        .subscribe(res => {
-          console.log(res);
-        })
+        .subscribe(
+          {
+            next: (_) => {  this.emailsDelivered = true; },
+            error: _ => { this.errorOccured = true },
+            complete: () => { this.loading = false }
+          }
+        )
     }
   }
 
