@@ -74,7 +74,7 @@ export class AttendeeFormComponent implements AfterViewInit, OnDestroy {
         .subscribe(
           {
             next: _ => {  this.emailsDelivered = true; },
-            error: _ => { this.errorOccured = true },
+            error: _ => { this.errorOccured = true; this.loading = false },
             complete: () => { this.loading = false }
           }
         )
