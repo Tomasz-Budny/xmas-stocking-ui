@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class DrawApiService {
 
-  URL = 'https://localhost:7163/api/draw' 
+  URL = 'https://xmas-stocking-api.azurewebsites.net/api/draw'; 
 
   constructor(
     private http: HttpClient
