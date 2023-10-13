@@ -32,7 +32,8 @@ export class AttendeeFormComponent implements AfterViewInit, OnDestroy {
   private addAttendeeGroup() : FormGroup {
     return this.fb.group({
       name: [null, Validators.required],
-      email: [null, [Validators.required, Validators.email]]
+      email: [null, [Validators.required, Validators.email]],
+      preferredGifts: [null]
     });
   }
 

@@ -5,12 +5,13 @@
     Brak uczestników!
   </div>
   <div 
-    class="attendee-container w-full" 
+    class="attendee-container w-full mb-6" 
     *ngFor="let group of attendeesArray.controls; let i = index" 
     formArrayName="attendees">
+    <hr>
     <div 
       [formGroupName]="i" 
-      class="grid gap-2">
+      class="grid gap-2 mt-2">
       <div>
         <div class="text-xs">Imię</div>
         <input type="text" class="name" formControlName="name">
@@ -40,7 +41,16 @@
           </div>
         </div>
       </div>
-      <i (click)="removeAttendee(i)" class="fa-solid fa-circle-xmark"></i>
+      <i 
+        (click)="removeAttendee(i)" 
+        class="fa-solid fa-circle-xmark col-start-3 row-start-1 row-end-3"></i>
+      <div class="col-start-1 col-end-3">
+        <div class="text-xs">Preferowane prezenty (opcjonalne)</div>
+        <input 
+          type="text" 
+          class="preferredGifts" 
+          formControlName="preferredGifts">
+      </div>
     </div>
   </div>
 </form>
