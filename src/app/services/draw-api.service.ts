@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class DrawApiService {
 
-  URL = 'https://localhost:7163/api/drawn' 
+  URL = 'https://localhost:7163/api/draw' 
 
   constructor(
     private http: HttpClient
