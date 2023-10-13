@@ -7,6 +7,7 @@ import { AttendeeFormComponent } from './home/attendee-form/attendee-form.compon
 import { ReactiveFormsModule } from '@angular/forms';
 import { FooterComponent } from './footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
+import { LayoutModule } from '@angular/cdk/layout';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -21,6 +22,7 @@ const routes: Routes = [
     FooterComponent
   ],
   imports: [
+    LayoutModule,
     HttpClientModule,
     ReactiveFormsModule,
     BrowserModule,

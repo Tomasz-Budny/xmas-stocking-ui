@@ -1,8 +1,12 @@
-<div class="flex flex-col">
+<div class="flex flex-col" *ngIf="contentVisible$ | async; else notPhone">
   <div class="container">
     <h1 class="mb-3">Wybierz uczestników losowania mikołajkowego!</h1>
     <app-attendee-form class="w-full"></app-attendee-form>
   </div>
   <app-footer></app-footer>
 </div>
-
+<ng-template #notPhone>
+  <div class="grid w-screen">
+    <p class="place-self-center">Aplikacja dostępna tylko na telefonie!</p>
+  </div>
+</ng-template>
