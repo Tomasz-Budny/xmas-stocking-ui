@@ -27,7 +27,7 @@ export class AttendeeFormComponent implements AfterViewInit, OnDestroy {
       attendees: this.fb.array(
         [this.addAttendeeGroup(), this.addAttendeeGroup()], 
         [CustomValidators.minLengthArray(1), 
-         CustomValidators.arrayLengthIsEven()])
+         CustomValidators.arrayLengthIsEven])
     })
   }
 
@@ -73,7 +73,7 @@ export class AttendeeFormComponent implements AfterViewInit, OnDestroy {
       this.drawApiService.drawGiftPresenters(value)
         .subscribe(
           {
-            next: (_) => {  this.emailsDelivered = true; },
+            next: _ => {  this.emailsDelivered = true; },
             error: _ => { this.errorOccured = true },
             complete: () => { this.loading = false }
           }
