@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     environment:
-      name: 'Production'
+      name: 'production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
@@ -53,6 +53,6 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'xmas-stocking-ui-app'
-          slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
+          slot-name: 'production'
+          publish-profile: ${{ secrets.AzureAppService_PublishProfile_35afd8e2d35b477b98487da96a352880 }}
           package: .
