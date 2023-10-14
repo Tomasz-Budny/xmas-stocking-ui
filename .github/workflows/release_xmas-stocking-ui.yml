@@ -54,5 +54,5 @@ jobs:
         with:
           app-name: 'xmas-stocking-ui-app'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_DAE71066F2534CBC9E73018130DCFF54 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
           package: .
