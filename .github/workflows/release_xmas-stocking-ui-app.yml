@@ -4,11 +4,10 @@
 name: Build and deploy Node.js app to Azure Web App - xmas-stocking-ui-app
 
 on:
-  push:
-    pull_request:
+  pull_request:
+    branches:
       - release
-  workflow_dispatch:
-
+  
 env:
   AZURE_WEBAPP_PACKAGE_PATH: './dist/xmas-stocking'      # set this to the path to your web app project
 
