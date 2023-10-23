@@ -4,6 +4,7 @@
 name: Build and deploy Node.js app to Azure Web App - xmas-stocking-ui-app
 
 on:
+  workflow_dispatch:
   pull_request:
     branches:
       - release
