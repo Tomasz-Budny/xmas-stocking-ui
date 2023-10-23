@@ -25,7 +25,7 @@ export class AttendeeFormComponent implements AfterViewInit, OnDestroy {
   ) {
     this.attendeeForm = this.fb.group({
       attendees: this.fb.array(
-        [this.addAttendeeGroup(), this.addAttendeeGroup()], 
+        [], 
         [CustomValidators.minLengthArray(1), 
          CustomValidators.arrayLengthIsEven])
     })
