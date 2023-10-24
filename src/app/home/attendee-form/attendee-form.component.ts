@@ -32,6 +32,8 @@ export class AttendeeFormComponent implements AfterViewInit, OnDestroy {
   }
 
   private addAttendeeGroup() : FormGroup {
+    this.footerService.numberOfAttendees$.next(this.attendeesArray.controls.length + 1);
+
     return this.fb.group({
       name: [null, Validators.required],
       email: [null, [Validators.required, Validators.email]],
@@ -43,12 +45,12 @@ export class AttendeeFormComponent implements AfterViewInit, OnDestroy {
     this.attendeeForm.statusChanges.pipe(
       tap(status => {
         const isValid = status === 'VALID';
-        this.footerService.submitBtnEnabled.next(isValid);
+        this.footerService.submitBtnEnabled$.next(isValid);
       }),
       takeUntil(this.destroy$)
     ).subscribe();
 
-    this.footerService.formSubmitted
+    this.footerService.formSubmitted$
     .subscribe(_ => {
       this.submit();
     });
@@ -64,6 +66,7 @@ export class AttendeeFormComponent implements AfterViewInit, OnDestroy {
 
   removeAttendee(index: number) : void {
     this.attendeesArray.removeAt(index);
+    this.footerService.numberOfAttendees$.next(this.attendeesArray.controls.length);
   }
 
   private submit() : void {

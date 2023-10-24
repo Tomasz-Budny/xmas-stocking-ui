@@ -5,8 +5,9 @@ import { BehaviorSubject, Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class FooterService {
-  public submitBtnEnabled = new BehaviorSubject<boolean>(false);
-  public formSubmitted: Subject<void> = new Subject<void>()
+  public submitBtnEnabled$ = new BehaviorSubject<boolean>(false);
+  public numberOfAttendees$ = new Subject<number>(); 
+  public formSubmitted$: Subject<void> = new Subject<void>()
 
   constructor() { }
 
