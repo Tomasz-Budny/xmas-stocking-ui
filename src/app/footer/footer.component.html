@@ -2,14 +2,14 @@
 <hr>
 <div class="container flex items-center">
   <ng-container 
-    *ngIf="footerService.numberOfAttendees$ | async as attendeesNumber">
+    *ngIf="attendeesNumber$ | async as attendeesNumber">
     <div class="text-lg font-medium">
       Liczba uczestników: {{ attendeesNumber }}
     </div>
   </ng-container>
   <button 
-    (click)="footerService.formSubmitted$.next()"
-    [disabled]="!(footerService.submitBtnEnabled$ | async)"
+    (click)="attendeeFormService.submit()"
+    [disabled]="!(attendeeFormService.valid$| async)"
     class="btn ml-auto p-4 text-lg">
     Losuj
   </button>

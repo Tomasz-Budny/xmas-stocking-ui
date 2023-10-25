@@ -1,90 +1,48 @@
-import { AfterViewInit, Component, OnDestroy } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject, takeUntil, tap } from 'rxjs';
+import { Component } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { EMPTY, Observable, catchError, switchMap, tap } from 'rxjs';
+import { AttendeeFormService } from 'src/app/services/attendee-form.service';
 import { DrawApiService } from 'src/app/services/draw-api.service';
-import { FooterService } from 'src/app/services/footer.service';
-import { CustomValidators } from 'src/app/utilities/custom-validators';
 
 @Component({
   selector: 'app-attendee-form',
   templateUrl: './attendee-form.component.html',
   styleUrls: ['./attendee-form.component.scss'],
 })
-export class AttendeeFormComponent implements AfterViewInit, OnDestroy {
+export class AttendeeFormComponent {
 
-  public attendeeForm: FormGroup;
-  public destroy$: Subject<void> = new Subject<void>();
   public loading: boolean = false;
   public emailsDelivered: boolean = false;
   public errorOccured: boolean = false;
 
+  public attendees$: Observable<FormGroup[]>;
+
   constructor(
-    public footerService: FooterService,
-    public drawApiService: DrawApiService,
-    private fb: FormBuilder
+    public attendeeFormService: AttendeeFormService,
+    public drawApiService: DrawApiService
   ) {
-    this.attendeeForm = this.fb.group({
-      attendees: this.fb.array(
-        [], 
-        [CustomValidators.minLengthArray(1), 
-         CustomValidators.arrayLengthIsEven])
-    })
+    this.attendees$ = this.attendeeFormService.get();
+
+    this.attendeeFormService.formSubmitted
+    .pipe(
+      tap(_ => this.loading = true),
+      switchMap(data => this.drawApiService.drawGiftPresenters(data)
+      .pipe(
+        tap({ 
+          next: _ => this.emailsDelivered = true,
+          error: _ =>  this.errorOccured = true
+        }),
+        catchError(_ => EMPTY ),
+        tap({ complete: () =>  this.loading = false})
+      ))
+    ).subscribe()
   }
 
-  private addAttendeeGroup() : FormGroup {
-    this.footerService.numberOfAttendees$.next(this.attendeesArray.controls.length + 1);
-
-    return this.fb.group({
-      name: [null, Validators.required],
-      email: [null, [Validators.required, Validators.email]],
-      preferredGifts: [null]
-    });
+  removeAttendee(index: number) {
+    this.attendeeFormService.remove(index);
   }
 
-  ngAfterViewInit(): void {
-    this.attendeeForm.statusChanges.pipe(
-      tap(status => {
-        const isValid = status === 'VALID';
-        this.footerService.submitBtnEnabled$.next(isValid);
-      }),
-      takeUntil(this.destroy$)
-    ).subscribe();
-
-    this.footerService.formSubmitted$
-    .subscribe(_ => {
-      this.submit();
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-  }
-
-  addAttendee() : void {
-    this.attendeesArray.push(this.addAttendeeGroup());
-  }
-
-  removeAttendee(index: number) : void {
-    this.attendeesArray.removeAt(index);
-    this.footerService.numberOfAttendees$.next(this.attendeesArray.controls.length);
-  }
-
-  private submit() : void {
-    if(this.attendeeForm.valid) {
-      const value = this.attendeeForm.value.attendees;
-      this.loading = true
-      this.drawApiService.drawGiftPresenters(value)
-        .subscribe(
-          {
-            next: _ => {  this.emailsDelivered = true; },
-            error: _ => { this.errorOccured = true; this.loading = false },
-            complete: () => { this.loading = false }
-          }
-        )
-    }
-  }
-
-  get attendeesArray(): FormArray {
-    return <FormArray>this.attendeeForm.get('attendees');
+  addAttendee() {
+    this.attendeeFormService.add();
   }
 }
