@@ -29,8 +29,7 @@ export class AttendeeFormService {
     this.attendeeForm = this.fb.group({
       attendees: this.fb.array(
         [], 
-        [CustomValidators.minLengthArray(1), 
-         CustomValidators.arrayLengthIsEven])
+        [CustomValidators.minLengthArray(1)])
     });
 
     this.valid$ = this.attendeeForm.statusChanges.pipe(
