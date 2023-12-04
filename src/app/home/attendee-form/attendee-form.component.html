@@ -1,12 +1,14 @@
-<form [formGroup]="attendeeForm">
-  <div
-    class="text-center" 
-    *ngIf="attendeesArray.controls.length === 0">
-    Brak uczestników!
-  </div>
+<form [formGroup]="attendeeFormService.attendeeForm">
+  <ng-container *ngIf="attendees$ | async as attendees">
+    <div
+      class="text-center" 
+      *ngIf="attendees.length === 0">
+      Brak uczestników!
+    </div>
+  </ng-container>
   <div 
     class="w-full mb-6" 
-    *ngFor="let group of attendeesArray.controls; let i = index" 
+    *ngFor="let group of attendees$ | async; let i = index" 
     formArrayName="attendees">
     <hr>
     <div 
@@ -54,11 +56,11 @@
     </div>
   </div>
 </form>
-<div class="flex mt-5 flex-col">
+<div class="flex mt-5 flex-col" *ngIf="attendees$ | async as attendees">
   <div
     class="m-auto errors"
-    *ngIf="attendeeForm.get('attendees').errors as errors">
-    <div *ngIf="!errors['arrayLengthIsEven'] && attendeesArray.controls.length > 0">
+    *ngIf="attendeeFormService.attendeeForm.get('attendees').errors as errors">
+    <div *ngIf="!errors['arrayLengthIsEven'] && attendees.length > 0">
       Liczba uczestników losowania musi być parzysta!
     </div>
   </div>

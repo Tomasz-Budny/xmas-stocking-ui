@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { FooterService } from '../services/footer.service';
+import { AttendeeFormService } from '../services/attendee-form.service';
+import { Observable, map } from 'rxjs';
 
 @Component({
   selector: 'app-footer',
@@ -8,7 +9,14 @@ import { FooterService } from '../services/footer.service';
 })
 export class FooterComponent {
 
+  public attendeesNumber$: Observable<number>;
+
   constructor(
-    public footerService: FooterService
-  ) {}
+    public attendeeFormService: AttendeeFormService
+  ) {
+    this.attendeesNumber$ = attendeeFormService.get()
+    .pipe(
+      map(attendees => attendees.length)
+    );
+  }
 }
